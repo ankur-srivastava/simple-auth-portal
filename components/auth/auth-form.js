@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { signIn } from 'next-auth/client'
 import classes from './auth-form.module.css';
 
 function AuthForm() {
@@ -40,6 +41,15 @@ function AuthForm() {
         console.log(error)
       }
       
+    } else if(isLogin) {
+      // we dont need to call any API. Next auth will take care of this
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password
+      })
+
+      console.log('Post Login ', result)
     }
   }
 
